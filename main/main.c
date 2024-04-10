@@ -39,16 +39,20 @@ void write_package(adc_t data) {
 }
 
 int read_and_scale_adc(int axis) {
+    int sum = 0;
     adc_select_input(axis);
-    int raw = adc_read();
+    for (int i = 0; i < 5; i++) {
+        sum += adc_read();
+    }
+    int avg = sum / 5;
 
-    int scaled_val = ((raw - 2048) / 8);
+    int scaled_val = ((avg - 2048) / 8);
 
     if ((scaled_val > -180) && (scaled_val < 180)) {
         scaled_val = 0; // Apply deadzone
     }
 
-    return scaled_val/16;
+    return scaled_val / 16;
 }
 
 void x_task(void *p) {
