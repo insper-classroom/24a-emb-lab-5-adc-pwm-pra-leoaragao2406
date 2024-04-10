@@ -75,6 +75,7 @@ void y_task(void *p) {
         xQueueSend(xQueueAdc, &data, portMAX_DELAY);
         vTaskDelay(pdMS_TO_TICKS(10));
     }
+    
 }
 
 void uart_task(void *p) {
